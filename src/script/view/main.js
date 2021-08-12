@@ -1,6 +1,6 @@
 import DataSource from "../data/data-source.js";
-import "./SearchBar.js"
-import "./ClubList.js";
+import "../components/SearchBar.js";
+import "../components/ClubList.js";
 
 const main = () => {
     const searchElement = document.querySelector("search-bar");
