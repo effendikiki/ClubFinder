@@ -2,17 +2,21 @@ import clubs from "./clubs.js";
 
 class DataSource {
 
-    static searchClub(keyword) {
-        return new Promise((resolve, reject) => {
+    static async searchClub(keyword) {
+        try {
+            const response = await fetch
+                (`https://www.thesportsdb.com/api/v1/json/1/searchteams.php?t=${keyword}`);
 
-            const filteredClubs = clubs.filter(club => club.name.toUpperCase().includes(keyword.toUpperCase()));
+            const responseJson = await response.json();
 
-            if (filteredClubs.length) {
-                resolve(filteredClubs);
-            } else {
-                reject(`${keyword} is not found`);
-            }
-        })
+            if (!responseJson.teams) return Promise.reject(`${keyword} is not found`)
+
+            return Promise.resolve(responseJson.teams)
+
+        } catch (error) {
+            console.log(error);
+            return Promise.reject(error);
+        }
     };
 
 }
